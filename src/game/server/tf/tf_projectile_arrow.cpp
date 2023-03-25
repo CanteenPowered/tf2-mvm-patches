@@ -469,7 +469,12 @@ bool CTFProjectile_Arrow::StrikeTarget( mstudiobbox_t *pBox, CBaseEntity *pOther
 	// Block and break on invulnerable players
 	CTFPlayer *pTFPlayerOther = ToTFPlayer( pOther );
 	if ( pTFPlayerOther && pTFPlayerOther->m_Shared.IsInvulnerable() )
-		return false;
+	{
+		// Don't break on our owner
+		CBaseEntity* pOwner = GetOwnerEntity();
+		if ( !pOwner || pOwner->entindex() != pOther->entindex() || pOwner->GetTeamNumber() != GetTeamNumber() )
+			return false;
+	}
 
 	CBaseAnimating *pOtherAnim = dynamic_cast< CBaseAnimating* >(pOther);
 	if ( !pOtherAnim )
