@@ -818,6 +818,9 @@ void CTFProjectile_Arrow::ArrowTouch( CBaseEntity *pOther )
 	if ( pOther->IsSolidFlagSet( FSOLID_TRIGGER | FSOLID_VOLUME_CONTENTS ) && !pPumpkinBomb && !bShield )
 		return;
 
+	if ( pOther->GetCollisionGroup() == TFCOLLISION_GROUP_RESPAWNROOMS )
+		return;
+
 	// test against combat characters, which include players, engineer buildings, and NPCs
 	CBaseCombatCharacter *pOtherCombatCharacter = dynamic_cast< CBaseCombatCharacter * >( pOther );
 
